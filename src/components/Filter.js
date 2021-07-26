@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import ApiContext from '../services/ApiContext';
 
 function Filter(){
+  const { setFilters, filters } = useContext(ApiContext);
+
+  const searchByText = ({ target: { value } }) => {
+    setFilters({ ...filters, filterByName: { name: value.toLowerCase() } });
+  };
 
   return(
-    <div>filtro aqui</div>
+    <input
+    value={ filters.filterByName.name }
+    onChange={ searchByText }
+    data-testid="name-filter"
+  />
   )
 }
 
