@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import ApiContext from '../services/ApiContext';
 
 function Filter(){
-  const { setFilters, filters } = useContext(ApiContext);
+  const { setFilters, filters, table } = useContext(ApiContext);
 
   const [opColumn, setOpColumn] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
@@ -11,6 +11,9 @@ function Filter(){
   const [column, setColumn] = useState('population');
   const [comp, setComp] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
+  const [columnSort, setColumnSort] = useState('name');
+  const [radioSort, setRadioSort] = useState('ASC');
+  
   const searchByText = ({ target: { value } }) => {
     setFilters({ ...filters, filterByName: { name: value.toLowerCase() } });
   };
@@ -42,6 +45,10 @@ function Filter(){
         }],
     });
   }
+
+  const reorderPlanes = () => {
+    setFilters({ ...filters, order: { column: columnSort, sort: radioSort } });
+  };
 
   return(
     <section> 
@@ -84,6 +91,36 @@ function Filter(){
             x
           </button>
         </p>))}
+
+        <select data-testid="column-sort" onChange={ (e) => handle(e, setColumnSort) }>
+        {table.map((op) => (<option value={ op } key={ op }>{op}</option>))}
+      </select>
+
+      <input
+        type="radio"
+        value="ASC"
+        name="Sort"
+        data-testid="column-sort-input-asc"
+        onClick={ (e) => handle(e, setRadioSort) }
+        defaultChecked
+      />
+      ASC
+      <input
+        type="radio"
+        value="DESC"
+        name="Sort"
+        data-testid="column-sort-input-desc"
+        onClick={ (e) => handle(e, setRadioSort) }
+      />
+      DESC
+      <button
+        type="button"
+        onClick={ reorderPlanes }
+        data-testid="column-sort-button"
+      >
+        Reordenar
+      </button>
+
     </section>
   )
 }

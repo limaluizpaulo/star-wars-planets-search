@@ -2,12 +2,12 @@ import React, {useContext, useState, useEffect} from 'react';
 import ApiContext from '../services/ApiContext';
 
 function Table(){
-  const {allPlanets,table} = useContext(ApiContext);
+  const {planets,table} = useContext(ApiContext);
   const [showPlanets, setPlanetsShow ] = useState();
 
   useEffect(() => {
-    setPlanetsShow(allPlanets.length !== 0);
-  }, [allPlanets])
+    setPlanetsShow(planets.length !== 0);
+  }, [planets])
 
   const buildTable = (names) => (<tr>{names.map((n) => <th key={n}> {n}</th>)}</tr>);
   return(
@@ -16,7 +16,7 @@ function Table(){
        <table>
          <tbody>
           {buildTable(table)}
-          {allPlanets.map((
+          {planets.map((
               { climate,
                 created,
                 diameter,
