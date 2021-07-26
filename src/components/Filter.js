@@ -18,6 +18,10 @@ function Filter(){
     callBack(value);
   };
 
+  const applyFilter = () => {
+    alert('filtro aplicado ;) ')
+  }
+
   return(
     <section> 
       <input
@@ -41,6 +45,14 @@ function Filter(){
         data-testid="value-filter"
         onChange={ (e) => handle(e, setValueFilter) }
       />
+
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ applyFilter }
+      >
+        Filtrar
+      </button>
     </section>
   )
 }
