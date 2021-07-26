@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import ApiContext from '../services/ApiContext';
 
 function Table(){
-  const {allPlanets} = useContext(ApiContext);
+  const {allPlanets,table} = useContext(ApiContext);
   const [showPlanets, setPlanetsShow ] = useState();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function Table(){
      {showPlanets && (
        <table>
          <tbody>
-          {buildTable(Object.keys(allPlanets[0]).filter((e) => e !== 'residents'))}
+          {buildTable(table)}
           {allPlanets.map((
               { climate,
                 created,
