@@ -19,7 +19,17 @@ function Filter(){
   };
 
   const applyFilter = () => {
-    alert('filtro aplicado ;) ')
+    setOpColumn(opColumn.filter((op) => op !== column));
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues,
+        {
+          column,
+          comparison: comp,
+          value: valueFilter,
+        }],
+    });
+    console.log(filters.filterByNumericValues);
   }
 
   return(

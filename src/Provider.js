@@ -8,7 +8,9 @@ function Provider({children}){
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
-    }});
+    },
+    filterByNumericValues: [],
+  });
 
   const STARWARS_API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/'; 
   const planetsData = async () => {
@@ -32,6 +34,21 @@ function Provider({children}){
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.filterByName]);
+
+  const filterNumMore = (c, v) => allPlanets.filter((p) => Number(p[c]) > Number(v));
+  const filterNumLess = (c, v) => allPlanets.filter((p) => Number(p[c]) < Number(v));
+  const filterNumequal = (c, v) => allPlanets.filter((p) => Number(p[c]) === Number(v));
+
+  useEffect(() => {
+    getPlanets();
+    const { filterByNumericValues } = filters;
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
+      if (comparison === 'maior que') setAllPlanets(filterNumMore(column, value));
+      if (comparison === 'menor que') setAllPlanets(filterNumLess(column, value));
+      if (comparison === 'igual a') setAllPlanets(filterNumequal(column, value));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.filterByNumericValues]);
 
   return(
     <ApiContext.Provider value={{allPlanets,filters, table, setFilters}} >
