@@ -1,7 +1,8 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ApiContext from './services/ApiContext';
 
-function Provider({children}){
+function Provider({ children }) {
   const keysnumber = ['diameter',
     'orbital_period', 'rotation_period', 'surface_water', 'population'];
   const [planets, setPlanets] = useState([]);
@@ -43,7 +44,8 @@ function Provider({children}){
     setPlanets([...toOrder]);
   };
 
-  const STARWARS_API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/'; 
+  const STARWARS_API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
   const planetsData = async () => {
     const response = await fetch(STARWARS_API_URL);
     const result = response.json();
@@ -52,21 +54,21 @@ function Provider({children}){
 
   const getPlanets = async () => {
     if (allPlanets.length === 0) {
-    const { results } = await planetsData();
-    planetsOrder(results);
-    setAllPlanets([...results]);
-    setTable(Object.keys(results[0]).filter((e) => e !== 'residents'));
+      const { results } = await planetsData();
+      planetsOrder(results);
+      setAllPlanets([...results]);
+      setTable(Object.keys(results[0]).filter((e) => e !== 'residents'));
     } else {
       planetsOrder([...allPlanets]);
     }
-  }
+  };
 
   useEffect(() => {
     if (!filters.filterByName.name) getPlanets();
     else {
       const filteredPlanets = planets
         .filter(({ name }) => name.toLowerCase().includes(filters.filterByName.name));
-        setPlanets(filteredPlanets);
+      setPlanets(filteredPlanets);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.filterByName]);
@@ -86,11 +88,22 @@ function Provider({children}){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.filterByNumericValues, filters.order]);
 
-  return(
-    <ApiContext.Provider value={{planets,filters, table, setFilters}} >
+  return (
+    <ApiContext.Provider
+      value={ {
+        planets,
+        filters,
+        table,
+        setFilters,
+      } }
+    >
       {children}
     </ApiContext.Provider>
-  )
+  );
 }
+
+Provider.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+};
 
 export default Provider;

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import ApiContext from '../services/ApiContext';
 
-function Filter(){
+function Filter() {
   const { setFilters, filters, table } = useContext(ApiContext);
 
   const [opColumn, setOpColumn] = useState(
@@ -13,7 +13,7 @@ function Filter(){
   const [valueFilter, setValueFilter] = useState('');
   const [columnSort, setColumnSort] = useState('name');
   const [radioSort, setRadioSort] = useState('ASC');
-  
+
   const searchByText = ({ target: { value } }) => {
     setFilters({ ...filters, filterByName: { name: value.toLowerCase() } });
   };
@@ -44,19 +44,19 @@ function Filter(){
           value: valueFilter,
         }],
     });
-  }
+  };
 
   const reorderPlanes = () => {
     setFilters({ ...filters, order: { column: columnSort, sort: radioSort } });
   };
 
-  return(
-    <section> 
+  return (
+    <section>
       <input
-      value={ filters.filterByName.name }
-      onChange={ searchByText }
-      data-testid="name-filter"
-    />
+        value={ filters.filterByName.name }
+        onChange={ searchByText }
+        data-testid="name-filter"
+      />
 
       <select data-testid="column-filter" onChange={ (e) => handle(e, setColumn) }>
         {opColumn.map((op) => (<option value={ op } key={ op }>{op}</option>))}
@@ -92,10 +92,9 @@ function Filter(){
           </button>
         </p>))}
 
-        <select data-testid="column-sort" onChange={ (e) => handle(e, setColumnSort) }>
+      <select data-testid="column-sort" onChange={ (e) => handle(e, setColumnSort) }>
         {table.map((op) => (<option value={ op } key={ op }>{op}</option>))}
       </select>
-
       <input
         type="radio"
         value="ASC"
@@ -120,9 +119,8 @@ function Filter(){
       >
         Reordenar
       </button>
-
     </section>
-  )
+  );
 }
 
 export default Filter;
