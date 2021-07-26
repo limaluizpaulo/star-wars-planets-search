@@ -23,7 +23,7 @@ Esse projeto foi desenvolvido com a seguinte técnologias:
 
 ```bash
 # Clone o repositório
-git clone https://github.com/defauth98/starwars-planets-search
+git clone https://github.com/limaluizpaulo/star-wars-planets-search/
 
 # Entre no diretório
 cd starwars-planets-search
