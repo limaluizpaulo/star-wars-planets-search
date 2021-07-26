@@ -7,6 +7,7 @@ function Filter(){
   const [opColumn, setOpColumn] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
   );
+  const [filtersApplyed, setfiltersApplyed] = useState([]);
   const [column, setColumn] = useState('population');
   const [comp, setComp] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
@@ -18,8 +19,19 @@ function Filter(){
     callBack(value);
   };
 
+  const removeFilter = (apply) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((fil) => fil.column !== apply),
+    });
+    setfiltersApplyed(filtersApplyed.filter((a) => a !== apply));
+    setOpColumn([...opColumn, apply]);
+  };
+
   const applyFilter = () => {
     setOpColumn(opColumn.filter((op) => op !== column));
+    setfiltersApplyed([...filtersApplyed, column]);
     setFilters({
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues,
@@ -29,7 +41,6 @@ function Filter(){
           value: valueFilter,
         }],
     });
-    console.log(filters.filterByNumericValues);
   }
 
   return(
@@ -63,6 +74,16 @@ function Filter(){
       >
         Filtrar
       </button>
+      {filtersApplyed.map((apply) => (
+        <p key={ apply } data-testid="filter">
+          {apply}
+          <button
+            type="button"
+            onClick={ () => removeFilter(apply) }
+          >
+            x
+          </button>
+        </p>))}
     </section>
   )
 }
