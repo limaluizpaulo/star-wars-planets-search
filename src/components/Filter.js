@@ -9,6 +9,7 @@ function Filter(){
   );
   const [column, setColumn] = useState('population');
   const [comp, setComp] = useState('maior que');
+  const [valueFilter, setValueFilter] = useState('');
   const searchByText = ({ target: { value } }) => {
     setFilters({ ...filters, filterByName: { name: value.toLowerCase() } });
   };
@@ -34,6 +35,12 @@ function Filter(){
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
+
+      <input
+        type="number"
+        data-testid="value-filter"
+        onChange={ (e) => handle(e, setValueFilter) }
+      />
     </section>
   )
 }
