@@ -26,7 +26,7 @@ Esse projeto foi desenvolvido com a seguinte técnologias:
 git clone https://github.com/limaluizpaulo/star-wars-planets-search/
 
 # Entre no diretório
-cd starwars-planets-search
+cd star-wars-planets-search
 
 # Instale as depedências
 npm install
